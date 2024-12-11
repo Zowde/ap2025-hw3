@@ -1,5 +1,4 @@
 import pytest
-
 from errors import ItemNotExistError, ItemAlreadyExistsError
 from shopping_cart import ShoppingCart
 from store import Store
