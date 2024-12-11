@@ -1,10 +1,6 @@
 from item import Item
-
-class ItemNotExistError(Exception):
-    pass
-
-class ItemAlreadyExistError(Exception):
-    pass
+from errors import ItemNotExistError
+from errors import ItemAlreadyExistsError
 
 
 class ShoppingCart:
@@ -13,7 +9,7 @@ class ShoppingCart:
 
     def add_item(self, item: Item):
         if item in self.items:
-            raise ItemAlreadyExistError("The item already exists")
+            raise ItemAlreadyExistsError("The item already exists")
         self.items.append(item)
 
     def remove_item(self, item_name: str):
