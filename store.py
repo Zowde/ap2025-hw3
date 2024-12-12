@@ -23,20 +23,29 @@ class Store:
         return self._items
 
     def search_by_name(self, item_name: str) -> list:
-    # Filter items whose name contains the search term (case-insensitive)
-      matching_items = [item for item in self._items 
-                      if item_name.lower() in item.name.lower() and item not in self._shopping_cart.items]
+    # Filter items whose name contains the search term (case-insensitive) and not inside SC
+      matching_items=[]
+      for item in self._items:
+          if item_name in item.name and item not in self._shopping_cart.items:
+             
+             matching_items.append(item)
     
-    # Get hashtags from the items in the shopping cart once (case-insensitive)
-      cart_hashtags = [hashtag.lower() for item in self._shopping_cart.items for hashtag in item.hashtags]
+     
+    # Get hashtags from all the itemse inside the SC (case-insensitive)
+      cart_hashtags = [hashtag for item in self._shopping_cart.items for hashtag in item.hashtags]
+    # we should sort the mathcing_items according the cart_hashtags
+      matching = sorted(matching_items,key=lambda item:item.name)
+      result_items = sorted (matching,key=lambda item: self.count_common_hashtags_for_item(item.hashtags,cart_hashtags),reverse=True)
     
-    # Sort the items first by the number of common hashtags with the cart, then by name (case-insensitive)
-      matching_items.sort(key=lambda item: (
-        -sum(hashtag in cart_hashtags for hashtag in item.hashtags),  # Number of common hashtags
-         item.name.lower()  # Lexicographical order (case-insensitive)
-    ))
-
-      return matching_items
+      return result_items
+    def count_common_hashtags_for_item(self,list1,list2):#list hashtags , list2 tags
+        count = 0
+        for ht in list1:
+            for htag in list2:
+                if htag == ht:
+                    count += 1
+        return count   
+    
 
     def search_by_hashtag(self, hashtag: str) -> list:
                
