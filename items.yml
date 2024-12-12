@@ -20,6 +20,7 @@ items:
     hashtags:
       - H1
       - H2
+    
     description: this is the first item in the shopping cart for the example
   - name: Shopping Cart 2
     price: 50
