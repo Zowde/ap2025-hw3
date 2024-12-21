@@ -23,7 +23,7 @@ class Store:
         return self._items
 
     def search_by_name(self, item_name: str) -> list:
-    # Filter items whose name contains the search term (case-insensitive) and not inside SC
+      '''Filter items whose name contains the search term (case-insensitive) and not inside SC'''
       matching_items=[]
       for item in self._items:
           if item_name in item.name and item not in self._shopping_cart.items:
@@ -38,7 +38,8 @@ class Store:
       result_items = sorted (matching,key=lambda item: self.count_common_hashtags_for_item(item.hashtags,cart_hashtags),reverse=True)
     
       return result_items
-    def count_common_hashtags_for_item(self,list1,list2):#list hashtags , list2 tags
+    def count_common_hashtags_for_item(self,list1,list2):
+        '''list hashtags , list2 tags'''
         count = 0
         for ht in list1:
             for htag in list2:
@@ -49,7 +50,7 @@ class Store:
 
     def search_by_hashtag(self, hashtag: str) -> list:
                
-    # Filter items whose hashtags contain the search term (case-insensitive)
+                ''' Filter items whose hashtags contain the search term (case-insensitive)'''
                 matching_items = [item for item in self._items 
                       if hashtag.lower() in (h.lower() for h in item.hashtags) and item not in self._shopping_cart.items]
     
@@ -66,7 +67,7 @@ class Store:
 
  
     def add_item(self, item_name: str):
-        # Search for items that match the given name (substring)
+       '''Search for items that match the given name (substring)'''
        matching_items = [item for item in self._items if item_name in item.name]
     
        if len(matching_items) == 0:
@@ -80,7 +81,7 @@ class Store:
        self._shopping_cart.add_item(item)
 
     def remove_item(self, item_name: str):
-        # Search for items that match the given name (substring)
+        ''' Search for items that match the given name (substring)'''
         matching_items = [item for item in self._items if item_name.lower() in item.name.lower()]
         
         if len(matching_items) == 0:
